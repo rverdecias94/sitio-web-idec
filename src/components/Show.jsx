@@ -112,8 +112,8 @@ export const Show = () => {
           <div className='col-lg-5 col-sm-12 col-md-5 mt-4 mb-2 d-flex justify-content-between position-relative'>
             <span style={{
               position: "absolute",
-              top: -15,
-              left: 21,
+              top: -26,
+              left: 8,
               background: "white",
               padding: "0 5px"
             }}>Filtrar por</span>
@@ -154,7 +154,7 @@ export const Show = () => {
 
         </div>
 
-        <div className="col">
+        <div className="overflow-scroll">
           <table className='table table-striped'>
             <thead className="table-dark">
               <tr>
