@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { db } from '../firebaseConfig/firebase';
+import Header from './Layouts/Header';
 
 const Create = () => {
 
@@ -23,6 +24,7 @@ const Create = () => {
 
   return (
     <>
+      <Header></Header>
       <div className="container" /* style={{ width: "85%", marginTop: "5%" }} */>
         <div className="row">
           <div className="col">

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getDoc, updateDoc, doc } from 'firebase/firestore'
 import { db } from '../firebaseConfig/firebase'
 import { Link } from 'react-router-dom';
+import Header from './Layouts/Header';
 
 
 const Edit = () => {
@@ -45,6 +46,7 @@ const Edit = () => {
 
   return (
     <>
+      <Header />
       <div className="container"/*  style={{ width: "85%", marginTop: "5%" }} */>
         <div className="row">
           <div className="col">

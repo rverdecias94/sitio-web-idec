@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig/firebase';
+import Header from './Layouts/Header';
+
+
 
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -95,12 +98,23 @@ export const Show = () => {
   /* const calcularMonedas = students.reduce((suma, student) => suma + parseInt(student.monedas), 0); */
   return (
     <>
+      <Header />
       <div className="container">
         <div className="row">
           <div className='col-lg-2 col-sm-6 col-md-2'>
             <Link to="/create" className='text-decoration-none'>
-              <button className="d-grid btn btn-success mt-4 mb-2">
-                Registrar
+              <button className="btn btn-success mt-4 mb-2" style={{
+                position: "fixed",
+                bottom: "5%",
+                right: "7%",
+                borderRadius: "50%",
+                width: 50,
+                height: 50,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}>
+                <i className="fa fa-plus"></i>
               </button>
             </Link>
           </div>
@@ -111,11 +125,8 @@ export const Show = () => {
 
           <div className='col-lg-5 col-sm-12 col-md-5 mt-4 mb-2 d-flex justify-content-between position-relative'>
             <span style={{
-              position: "absolute",
-              top: -26,
-              left: 8,
-              background: "white",
-              padding: "0 5px"
+              flexGrow: 1,
+              margin: "6px 0"
             }}>Filtrar por</span>
             <select onChange={(e) => setField(e.target.value !== "" ? e.target.value : null)}
               style={{
@@ -124,9 +135,7 @@ export const Show = () => {
                 border: "none",
                 outline: "none",
                 padding: "7px 34px 7px 10px",
-                width: "100%",
-
-
+                flexGrow: 8
               }}>
               <option value="nombre">Nombre</option>
               <option value="apellidos">Apellidos</option>
@@ -171,19 +180,19 @@ export const Show = () => {
                 data.filter(serchingTerm(search)).map(student => (
                   <tr key={student.id}>
                     <td>{student.gender === "M"
-                      ? <img src='/img/niño.png' style={{ width: 60, height: 60 }} />
-                      : <img src='/img/niña.png' style={{ width: 60, height: 60 }} />}
+                      ? <img src='/img/niño.png' style={{ width: 40, height: 40 }} />
+                      : <img src='/img/niña.png' style={{ width: 40, height: 40 }} />}
                     </td>
                     <td>{student.nombre}</td>
                     <td>{student.apellidos}</td>
                     <td>{student.edad}</td>
-                    <td>{student.monedas}<i className='ms-3 fa fa-coins ' style={{ color: "orange" }} /></td>
+                    <td>{student.monedas}<i className='ms-1 fa fa-coins ' style={{ color: "orange" }} /></td>
                     <td>
-                      <Link to={`/edit/${student.id}`} className='btn btn-primary me-2'>
-                        <i className="fa-solid fa-pencil" />
+                      <Link to={`/edit/${student.id}`} className=''>
+                        <i className="fa-solid fa-pencil" style={{ color: "#2d7cc5" }} />
                       </Link>
-                      <button onClick={() => { confirmDelete(student.id) }} className='btn btn-danger'>
-                        <i className="fa-solid fa-trash" />
+                      <button onClick={() => { confirmDelete(student.id) }} style={{ border: "none", background: 'transparent' }}>
+                        <i className="fa-solid fa-trash" style={{ color: "#f24343" }} />
                       </button>
                     </td>
                   </tr>
