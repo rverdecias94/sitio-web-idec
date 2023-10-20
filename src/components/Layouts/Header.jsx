@@ -2,14 +2,14 @@
 const Header = () => {
 
   return (
-    <div style={{ width: '100%', background: "#273a4f", height: 100, marginBottom: 10 }}>
-      <img src="/img/logoClubDJ.png" width={80} height={80}
+    <div style={{ width: '100vw', background: "#355d97", height: "12vh" }}>
+      <img src="/img/logoClubDJ.png" width={65} height={60}
         style={{
           borderRadius: '50%',
-          margin: ".7rem"
+          /* margin: ".7rem", */
         }}
       />
-      <span className='text-white bold'>Registro de Asistencia y Monedas </span>
+      <h4 className='text-white bold d-inline-block'>Registro de Asistencia y Monedas </h4>
     </div>
   )
 }

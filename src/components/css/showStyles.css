@@ -1,0 +1,25 @@
+.button-plus {
+  background-color: rgb(212, 212, 212);
+  color: rgb(82, 91, 123);
+  padding: 5px 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-minus {
+  background-color: rgb(212, 212, 212);
+  color: rgb(82, 91, 123);
+  padding: 5px 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-plus:hover {
+  background-color: rgb(3, 74, 60);
+}
+
+.button-minus:hover {
+  background-color: rgb(93, 16, 16);
+}

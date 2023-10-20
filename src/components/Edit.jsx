@@ -50,7 +50,7 @@ const Edit = () => {
       <div className="container"/*  style={{ width: "85%", marginTop: "5%" }} */>
         <div className="row">
           <div className="col">
-            <h1>Editar estudiante</h1>
+            <h3 style={{ fontFamily: "cursive" }}>Editar estudiante</h3>
             <form onSubmit={updateInfo}>
               <div className="mb-3">
                 <label htmlFor="" className="form-label">Nombre</label>
@@ -70,11 +70,10 @@ const Edit = () => {
               </div>
               <div className="mb-3">
                 <label htmlFor="" className="form-label">Género</label>
-                <input type="text"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className='form-control'
-                />
+                <div className='d-flex gap-2'>
+                  <input type="radio" name="gender" value="M" checked={gender === 'M'} onChange={() => setGender('M')} /> Masculino
+                  <input type="radio" name="gender" value="F" checked={gender === 'F'} onChange={() => setGender('F')} /> Femenino
+                </div>
               </div>
               <div className="mb-3">
                 <label htmlFor="" className="form-label">Edad</label>

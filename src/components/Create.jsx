@@ -11,7 +11,7 @@ const Create = () => {
   const [apellidos, setApellidos] = useState("")
   const [gender, setGender] = useState("")
   const [edad, setEdad] = useState("")
-  const [monedas, setMonedas] = useState(0)
+  const [monedas, setMonedas] = useState("")
   const navigate = useNavigate()
 
   const studentsCollection = collection(db, "estudiantes")
@@ -28,7 +28,7 @@ const Create = () => {
       <div className="container" /* style={{ width: "85%", marginTop: "5%" }} */>
         <div className="row">
           <div className="col">
-            <h1>Registrar estudiante</h1>
+            <h3 style={{ fontFamily: "cursive" }}>Registrar estudiante</h3>
             <form onSubmit={addStudent} className='form-control-sm'>
               <div className="mb-3">
                 <label htmlFor="" className="form-label">Nombre</label>
@@ -58,13 +58,13 @@ const Create = () => {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="" className="form-label">Género</label>
-                <input type="text"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className='form-control'
-                  placeholder="Ej: M"
-                />
+                <label htmlFor="" className="form-label">Género</label><br />
+
+                <div className='d-flex gap-2'>
+                  <input type="radio" name="gender" value="M" checked={gender === 'M'} onChange={() => setGender('M')} /> Masculino
+                  <input type="radio" name="gender" value="F" checked={gender === 'F'} onChange={() => setGender('F')} /> Femenino
+                </div>
+
               </div>
               <div className="mb-3">
                 <label htmlFor="" className="form-label">Monedas</label>
