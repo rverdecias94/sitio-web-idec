@@ -120,8 +120,8 @@ export const Show = () => {
       <div className='overflow-auto'>
         <Header />
         <div className='d-flex'>
-          {/* <Sidebar /> */}
-          <div style={{ padding: "0 3%" }}>
+          <Sidebar />
+          <div style={{ flexGrow: 8, padding: "0 5%" }}>
             <div className="row">
               <div className='col-lg-2 col-sm-6 col-md-2'>
                 <Link to="/create" className='text-decoration-none'>
