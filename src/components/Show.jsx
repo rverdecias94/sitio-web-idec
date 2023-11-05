@@ -87,8 +87,6 @@ export const Show = () => {
 
   useEffect(() => {
     setData(currentItems)
-    /* setCurrentPage(1)
-    setItemsPerPage(6) */
   }, [currentPage, students])
 
 
