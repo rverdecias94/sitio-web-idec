@@ -25,7 +25,7 @@ const Create = () => {
   return (
     <>
       <Header></Header>
-      <div className="container" /* style={{ width: "85%", marginTop: "5%" }} */>
+      <div className="container mt-5">
         <div className="row">
           <div className="col">
             <h3 style={{ fontFamily: "cursive" }}>Registrar estudiante</h3>

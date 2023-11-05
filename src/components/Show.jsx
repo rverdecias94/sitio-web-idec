@@ -8,18 +8,37 @@ import withReactContent from 'sweetalert2-react-content';
 import Sidebar from './Layouts/Sidebar';
 import './css/showStyles.css';
 
-
 const Myswal = withReactContent(Swal)
-
-
-
-
 
 export const Show = () => {
   const [students, setStudents] = useState([]);
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState("");
   const [field, setField] = useState("nombre");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+
+  // Obtener los elementos a mostrar en la página actual
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const arraySorted = students.sort(function (b, a) {
+    return (b.nombre.toLowerCase().localeCompare(a.nombre.toLowerCase()))
+  });
+
+  const currentItems = arraySorted.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Función para cambiar a la página siguiente
+  const nextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  // Función para cambiar a la página anterior
+  const previousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+
 
   const studentsCollection = collection(db, "estudiantes")
   const navigate = useNavigate()
@@ -67,18 +86,34 @@ export const Show = () => {
 
 
   useEffect(() => {
-    setData(students)
-  }, [students])
+    setData(currentItems)
+    /* setCurrentPage(1)
+    setItemsPerPage(6) */
+  }, [currentPage, students])
+
+
+  useEffect(() => {
+    if (search !== "") {
+      const currentItems = students.filter(serchingTerm(search))
+      setStudents(currentItems)
+      if (currentItems.length > 0) {
+        setData(currentItems)
+      }
+    }
+    else {
+      getStudents()
+    }
+    setCurrentPage(1)
+    setItemsPerPage(6)
+  }, [search])
 
 
 
   const getStudents = async () => {
     const data = await getDocs(studentsCollection)
-
     setStudents(
       data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
-
   }
 
   const deleteStudent = async (id) => {
@@ -121,22 +156,13 @@ export const Show = () => {
         <Header />
         <div className='d-flex'>
           <Sidebar />
-          <div style={{ flexGrow: 8, padding: "0 5%" }}>
+          <div className='content-body' style={{ flexGrow: 8, padding: "0 5%" }}>
             <div className="row">
-              <div className='col-lg-2 col-sm-6 col-md-2'>
+              <div className='col-lg-8 col-sm-6 col-md-2'>
                 <Link to="/create" className='text-decoration-none'>
-                  <button className="btn btn-success mb-2" style={{
-                    position: "fixed",
-                    bottom: "5%",
-                    right: "7%",
-                    borderRadius: "50%",
-                    width: 50,
-                    height: 50,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}>
+                  <button className="btn-create">
                     <i className="fa fa-plus"></i>
+                    <span className='create-text'>Adicionar</span>
                   </button>
                 </Link>
               </div>
@@ -145,7 +171,7 @@ export const Show = () => {
             <span className="badge bg-warning text-dark">Total de monedas: {calcularMonedas}</span>
           </div> */}
 
-              <div className='col-lg-5 col-sm-12 col-md-5 mt-4 mb-2 d-flex justify-content-between position-relative'>
+              <div className='col-lg-2 col-sm-12 col-md-5 mt-4 mb-2 d-flex justify-content-between position-relative'>
                 <select onChange={(e) => setField(e.target.value !== "" ? e.target.value : null)}
                   style={{
                     borderRadius: 5,
@@ -162,7 +188,8 @@ export const Show = () => {
                 </select>
               </div>
 
-              <div className='col-lg-5 col-sm-12 col-md-5 mt-4 mb-2'>
+              <div className='col-lg-2 col-sm-12 col-md-5 mt-4 mb-2 position-relative'>
+                <i className='fa fa-search icon-search' />
                 <input type="search"
                   className='justify-content-end'
                   placeholder='Buscar...'
@@ -171,7 +198,7 @@ export const Show = () => {
                     borderRadius: "5px",
                     boxShadow: "0px 0px 3px -1px",
                     outline: "none",
-                    padding: "6px",
+                    padding: "6px 44px 6px 12px",
                     width: "100%"
                   }}
                   onChange={e => setSearch(e.target.value)
@@ -188,28 +215,22 @@ export const Show = () => {
                     <th></th>
                     <th>Nombre</th>
                     <th>Apellidos</th>
-                    <th>Edad</th>
-                    <th>Monedas<i className='ms-3 fa fa-info-circle text-warning' />
-                      <select>
-                        <option value="normal">+1</option>
-                        <option value="5">+5</option>
-                        <option value="10">+10</option>
-                      </select>
-                    </th>
+                    <th className='show-item'>Edad</th>
+                    <th>Monedas</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data ? (
-                    data.filter(serchingTerm(search)).map(student => (
+                    data.map(student => (
                       <tr key={student.id}>
                         <td>{student.gender === "M"
-                          ? <img src='/img/niño.png' style={{ width: 40, height: 40 }} />
-                          : <img src='/img/niña.png' style={{ width: 40, height: 40 }} />}
+                          ? <img src='/img/niño.png' className="show-item" style={{ width: 40, height: 40 }} />
+                          : <img src='/img/niña.png' className="show-item" style={{ width: 40, height: 40 }} />}
                         </td>
                         <td>{student.nombre}</td>
                         <td>{student.apellidos}</td>
-                        <td>{student.edad}</td>
+                        <td className='show-item'>{student.edad}</td>
                         <td>
                           <button className='me-2 button-minus' type="submit" onClick={() => updateInfo(student.id, "minus")}>
                             <i className='fa fa-minus' />
@@ -234,7 +255,36 @@ export const Show = () => {
                 </tbody>
 
               </table>
-
+              {/* Botones de paginación */}
+              <div className='d-flex justify-content-between'>
+                <button
+                  disabled={currentPage === 1}
+                  onClick={previousPage}
+                  className='previous'
+                >
+                  <i className="fa fa-chevron-left small me-2" />
+                  Anterior
+                </button>
+                <div>
+                  <div className='d-flex justify-content-center align-items-center'>
+                    <select className='pagination' onChange={(e) => setItemsPerPage(e.target.value)}>
+                      <option value="5">5</option>
+                      <option value="15">15</option>
+                      <option value="25">25</option>
+                      <option value={students.length}>Todos</option>
+                    </select>
+                    <h6 className='ms-3 text-secondary'>Pág: {currentPage} de {Math.ceil(students.length / itemsPerPage)} </h6>
+                  </div>
+                </div>
+                <button
+                  disabled={indexOfLastItem >= students.length}
+                  onClick={nextPage}
+                  className='next'
+                >
+                  Siguiente
+                  <i className="fa fa-chevron-right small ms-2" />
+                </button>
+              </div>
             </div>
           </div >
         </div>

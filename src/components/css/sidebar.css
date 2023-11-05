@@ -1,0 +1,38 @@
+.btn-sidebar {
+  margin-top: 4vh;
+  font-size: 25px;
+  z-index: 0;
+  color: #ffffff;
+  margin-left: 20px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.sidebar-content {
+  flex-grow: 3;
+  z-index: 1;
+  margin: 0;
+  position: relative;
+  height: 88vh;
+  background: rgb(192 216 251)
+}
+
+@media only screen and (max-width: 450px) {
+  .sidebar-content {
+    position: fixed;
+    right: 0;
+    left: 0;
+    height: 100vh;
+    background: rgb(230 244 244);
+    overflow: hidden;
+  }
+
+  .btn-sidebar {
+    position: absolute;
+    top: 10px;
+  }
+
+  .show-item {
+    display: none;
+  }
+}
