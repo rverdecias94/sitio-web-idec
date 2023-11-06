@@ -27,4 +27,7 @@
     right: 0;
   }
 
+  .text-header {
+    font-size: medium;
+  }
 }
