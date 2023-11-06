@@ -164,7 +164,7 @@ export const Show = () => {
         <div className='d-flex'>
           <Sidebar sidebarOpen={sidebarOpen} />
           <div className={`margin-top-movile ${sidebarOpen ? "width" : "width-full"}`} style={{ padding: "0 3%" }}>
-            <div className="row mb-4 d-flex">
+            <div className="row mb-3 d-flex">
               <div className='col-lg-8 col-sm-6 col-md-2 align-items-center'>
                 <Link to="/create" className='text-decoration-none'>
                   <button className="btn-create">
@@ -178,7 +178,7 @@ export const Show = () => {
             <span className="badge bg-warning text-dark">Total de monedas: {calcularMonedas}</span>
           </div> */}
 
-              <div className='col-lg-2 col-sm-12 col-md-5 mt-4 mb-2 d-flex justify-content-between position-relative'>
+              <div className='col-lg-2 col-sm-12 col-md-5 mb-3 d-flex justify-content-between position-relative'>
                 <select onChange={(e) => setField(e.target.value !== "" ? e.target.value : null)}
                   style={{
                     borderRadius: 5,
@@ -262,15 +262,20 @@ export const Show = () => {
                 </tbody>
 
               </table>
+
+
+
+
+
               {/* Botones de paginación */}
-              <div className='d-flex justify-content-between'>
+              <div className='d-flex justify-content-between mt-4 mb-4'>
                 <button
                   disabled={currentPage === 1}
                   onClick={previousPage}
                   className='previous'
                 >
                   <i className="fa fa-chevron-left small me-2" />
-                  Anterior
+                  <span className='text-btn-pag'>Anterior</span>
                 </button>
                 <div>
                   <div className='d-flex justify-content-center align-items-center'>
@@ -288,7 +293,7 @@ export const Show = () => {
                   onClick={nextPage}
                   className='next'
                 >
-                  Siguiente
+                  <span className='text-btn-pag'>Siguiente</span>
                   <i className="fa fa-chevron-right small ms-2" />
                 </button>
               </div>

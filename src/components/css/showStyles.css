@@ -94,14 +94,15 @@
   }
 
   .margin-top-movile {
-    margin-top: 12vh;
+    margin-top: 15vh;
   }
 
   .width {
     width: 100vw;
   }
 
-  .create-text {
+  .create-text,
+  .text-btn-pag {
     display: none
   }
 }
