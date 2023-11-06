@@ -168,8 +168,8 @@ export const Show = () => {
               <div className='col-lg-8 col-sm-6 col-md-2 align-items-center'>
                 <Link to="/create" className='text-decoration-none'>
                   <button className="btn-create">
-                    <i className="fa fa-plus"></i>
-                    <span className='create-text'>Adicionar</span>
+                    <i className="fa fa-user-plus"></i>
+                    <span className='create-text ms-2'>Adicionar</span>
                   </button>
                 </Link>
               </div>
@@ -250,10 +250,10 @@ export const Show = () => {
                         </td>
                         <td>
                           <Link to={`/edit/${student.id}`} className=''>
-                            <i className="fa-solid fa-pencil" style={{ color: "#2d7cc5" }} />
+                            <i className="fa-solid fa-pencil" style={{ color: "#6b93cc" }} />
                           </Link>
                           <button onClick={() => { confirmDelete(student.id) }} style={{ border: "none", background: 'transparent' }}>
-                            <i className="fa-solid fa-trash" style={{ color: "#f24343" }} />
+                            <i className="fa-solid fa-trash" style={{ color: "#f27474" }} />
                           </button>
                         </td>
                       </tr>
