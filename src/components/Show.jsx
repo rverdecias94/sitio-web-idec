@@ -195,7 +195,7 @@ export const Show = () => {
                 </select>
               </div>
 
-              <div className='col-lg-2 col-sm-12 col-md-5 mt-4 mb-2 position-relative'>
+              <div className='col-lg-2 col-sm-12 col-md-5 mb-2 position-relative'>
                 <i className='fa fa-search icon-search' />
                 <input type="search"
                   className='justify-content-end'
