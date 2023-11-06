@@ -1,13 +1,10 @@
 .btn-create {
-  margin-top: 23px;
   background: #6b93cc !important;
   border: none;
   color: white;
   padding: 5px 10px;
   border-radius: 5px;
 }
-
-
 
 .button-plus {
   background-color: rgb(229, 229, 229);
@@ -75,6 +72,13 @@
   color: #6b93cc;
 }
 
+.width {
+  width: 80vw;
+}
+
+.width-full {
+  width: 100vw;
+}
 
 @media only screen and (max-width: 450px) {
   .btn-create {
@@ -89,11 +93,15 @@
     align-items: center;
   }
 
-  .create-text {
-    display: none
+  .margin-top-movile {
+    margin-top: 12vh;
   }
 
-  .content-body {
-    margin-top: 14vh;
+  .width {
+    width: 100vw;
+  }
+
+  .create-text {
+    display: none
   }
 }

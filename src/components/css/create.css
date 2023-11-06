@@ -1,0 +1,21 @@
+.margin-top-movile {
+  margin-top: 8vh;
+}
+
+.width {
+  width: 80vw;
+}
+
+.width-full {
+  width: 100vw;
+}
+
+@media only screen and (max-width: 450px) {
+  .width {
+    width: 100vw;
+  }
+
+  .margin-top-movile {
+    margin-top: 16vh;
+  }
+}

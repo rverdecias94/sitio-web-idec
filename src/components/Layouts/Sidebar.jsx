@@ -1,15 +1,14 @@
-import { useState } from "react";
+
 import "../css/sidebar.css"
+import PropTypes from 'prop-types';
+import { useSidebarContext } from '../../providers/SidebarProvider';
+
 
 const Sidebar = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(false);
-
+  const sidebarOpen = useSidebarContext();
   return (
     <>
-      <span>
-        <i className="fa fa-bars fixed-top btn-sidebar" onClick={() => setSidebarVisible(!sidebarVisible)} />
-      </span>
-      {sidebarVisible && (
+      {sidebarOpen && (
         <div className="sidebar-content">
 
         </div>
@@ -18,5 +17,9 @@ const Sidebar = () => {
     </>
   )
 }
+
+Sidebar.propTypes = {
+  sidebarOpen: PropTypes.bool
+};
 
 export default Sidebar

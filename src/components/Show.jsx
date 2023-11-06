@@ -7,14 +7,23 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import Sidebar from './Layouts/Sidebar';
 import './css/showStyles.css';
+import { useSidebarContext, useSidebarToggleContext } from '../providers/SidebarProvider';
+
+
+
 
 const Myswal = withReactContent(Swal)
 
 export const Show = () => {
+
+  const sidebarOpen = useSidebarContext();
+  const handlerSidebarVisible = useSidebarToggleContext();
+
   const [students, setStudents] = useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [field, setField] = useState("nombre");
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -151,12 +160,12 @@ export const Show = () => {
   return (
     <>
       <div className='overflow-auto'>
-        <Header />
+        <Header handlerSidebarVisible={handlerSidebarVisible} />
         <div className='d-flex'>
-          <Sidebar />
-          <div className='content-body' style={{ flexGrow: 8, padding: "0 5%" }}>
-            <div className="row">
-              <div className='col-lg-8 col-sm-6 col-md-2'>
+          <Sidebar sidebarOpen={sidebarOpen} />
+          <div className={`margin-top-movile ${sidebarOpen ? "width" : "width-full"}`} style={{ padding: "0 3%" }}>
+            <div className="row mb-4 d-flex">
+              <div className='col-lg-8 col-sm-6 col-md-2 align-items-center'>
                 <Link to="/create" className='text-decoration-none'>
                   <button className="btn-create">
                     <i className="fa fa-plus"></i>
