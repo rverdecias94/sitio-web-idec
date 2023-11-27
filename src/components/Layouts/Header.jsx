@@ -15,7 +15,7 @@ const Header = () => {
           <i className="fa fa-bars btn-bars" onClick={() => handlerSidebarVisible(!sidebarOpen)} />
         </span>
       }
-      <h5 className='text-white bold d-inline-block text-header'>Registro de Asistencia y Monedas </h5>
+      <h5 className=' bold d-inline-block text-header'>Registro de Asistencia y Monedas </h5>
     </div>
   )
 }

@@ -156,7 +156,7 @@ export const Show = () => {
   }, [])
 
 
-  /* const calcularMonedas = students.reduce((suma, student) => suma + parseInt(student.monedas), 0); */
+  const calcularMonedas = students.reduce((suma, student) => suma + parseInt(student.monedas), 0);
   return (
     <>
       <div className='overflow-auto'>
@@ -173,10 +173,6 @@ export const Show = () => {
                   </button>
                 </Link>
               </div>
-              {/* <div className='mt-4 mb-2 col-sm-6 col-lg-4 col-md-4 d-flex justify-content-end'>
-            <span className="badge bg-primary me-2">Total de niños: {students.length}</span>
-            <span className="badge bg-warning text-dark">Total de monedas: {calcularMonedas}</span>
-          </div> */}
 
               <div className='col-lg-2 col-sm-12 col-md-5 mb-3 d-flex justify-content-between position-relative'>
                 <select onChange={(e) => setField(e.target.value !== "" ? e.target.value : null)}
@@ -214,7 +210,10 @@ export const Show = () => {
               </div>
 
             </div>
-
+            <div className=' mb-2 col-sm-12 col-lg-12 col-md-12 d-flex aditional-info'>
+              <span className=" me-2 aditional-info-item">Total de niños: {students.length}</span>
+              <span className=" aditional-info-item">Monedas repartidas: {calcularMonedas}</span>
+            </div>
             <div className="overflow-y-auto">
               <table className='table table-striped'>
                 <thead className="table-dark">

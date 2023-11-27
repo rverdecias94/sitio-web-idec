@@ -1,7 +1,9 @@
 .btn-create {
-  background: #6b93cc !important;
+  /* background: #6b93cc !important; */
+  background-color: #2D3E57 !important;
   border: none;
-  color: white;
+  /* color: white; */
+  color: #CCAB6A;
   padding: 5px 10px;
   border-radius: 5px;
 }
@@ -42,8 +44,10 @@
   border: none;
   padding: 5px 8px;
   font-weight: 500;
-  color: #6b93cc;
-  background-color: rgb(236 241 249);
+  /* color: #6b93cc;
+  background-color: rgb(236 241 249); */
+  background-color: #2D3E57;
+  color: #CCAB6A;
 }
 
 .previous:hover,
@@ -66,10 +70,10 @@
   position: absolute;
   top: 0px;
   right: 12px;
-  background: #ecf1f9;
+  background-color: #2D3E57;
   padding: 10px;
   border-radius: 0px 5px 5px 0;
-  color: #6b93cc;
+  color: #CCAB6A;
 }
 
 .width {
@@ -82,7 +86,7 @@
 
 @media only screen and (max-width: 450px) {
   .btn-create {
-    background: #ffc107 !important;
+    background: #2D3E57 !important;
     position: fixed;
     top: 3%;
     right: 3%;

@@ -1,7 +1,8 @@
 .btn-bars {
   font-size: 25px;
   z-index: 0;
-  color: #ffffff;
+  /* color: #ffffff; */
+  color: #2D3E57;
   width: fit-content;
   cursor: pointer;
 }
@@ -9,7 +10,9 @@
 .header-container {
   padding: 2%;
   /* width: 100vw; */
-  background: #6b93cc;
+  /* background: #6b93cc; */
+  background-color: #CCAB6A;
+  color: #2D3E57;
   height: 12vh;
   display: flex;
   gap: 20px;

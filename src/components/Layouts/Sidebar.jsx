@@ -10,7 +10,9 @@ const Sidebar = () => {
     <>
       {sidebarOpen && (
         <div className="sidebar-content">
-
+          <button className="sidebar-buttons">Inicio</button>
+          <button className="sidebar-buttons">Club DJ</button>
+          <button className="sidebar-buttons">Seminario</button>
         </div>
       )
       }
