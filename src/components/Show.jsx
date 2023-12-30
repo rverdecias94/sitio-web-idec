@@ -62,12 +62,6 @@ export const Show = () => {
     }
   }
 
-
-
-
-
-
-
   // Función para cambiar a la página siguiente
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -78,35 +72,13 @@ export const Show = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
-
-
   const studentsCollection = collection(db, "estudiantes")
   const navigate = useNavigate()
 
-
-
   const serchingTerm = (search) => {
-    console.log(search)
-    if (field === "nombre") {
-      return function () {
-        let res = studentsOriginal.filter(student => student.nombre.includes(search) || !search)
-        return res
-      }
-    }
-    else if (field === "apellidos") {
-      return function (x) {
-        return x.apellidos.includes(search) || !search
-      }
-    }
-    else if (field === "edad") {
-      return function (x) {
-        return x.edad.includes(search) || !search
-      }
-    }
-    else if (field === "monedas") {
-      return function (x) {
-        return x.monedas.includes(search) || !search
-      }
+    return function () {
+      let res = studentsOriginal.filter(student => student[field].includes(search) || !search)
+      return res
     }
   }
 
@@ -114,7 +86,6 @@ export const Show = () => {
     let res = students.find(s => s.id === id)
     if (res) {
       let monedas = type === "plus" ? parseInt(res.monedas) + 1 : parseInt(res.monedas) - 1
-
       if (monedas >= 0) {
         res.monedas = monedas;
         const student = doc(db, "estudiantes", id)
@@ -135,6 +106,7 @@ export const Show = () => {
         setData(currentItems)
       }
     }
+    //eslint-disable-next-line
   }, [currentPage, students, fieldSort, sortOrder])
 
 
@@ -150,8 +122,7 @@ export const Show = () => {
     else {
       getStudents()
     }
-    /* setCurrentPage(1)
-    setItemsPerPage(6) */
+    //eslint-disable-next-line
   }, [search, itemsPerPage])
 
 
