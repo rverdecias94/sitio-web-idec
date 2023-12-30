@@ -38,6 +38,28 @@
   color: rgb(0, 0, 0);
 }
 
+.btn-pdf {
+  background-color: #f27474;
+  color: #f8f9fa;
+  border: none;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border-bottom: 3px solid #d94d5b;
+  font-weight: bold;
+}
+
+.btn-excel {
+  background-color: #74f2bd;
+  color: #f8f9fa;
+  border: none;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border-bottom: 3px solid #4dd98c;
+  font-weight: bold;
+}
+
 .previous,
 .next {
   border-radius: 5px;

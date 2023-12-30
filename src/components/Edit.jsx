@@ -26,7 +26,7 @@ const Edit = () => {
 
   useEffect(() => {
     getStudentById(id)
-  })
+  }, [])
 
 
   const updateInfo = async (e) => {

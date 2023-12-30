@@ -9,7 +9,8 @@ import Sidebar from './Layouts/Sidebar';
 import './css/showStyles.css';
 import { useSidebarContext, useSidebarToggleContext } from '../providers/SidebarProvider';
 
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 
 const Myswal = withReactContent(Swal)
@@ -20,6 +21,8 @@ export const Show = () => {
   const handlerSidebarVisible = useSidebarToggleContext();
 
   const [students, setStudents] = useState([]);
+  const [male, setMale] = useState([]);
+  const [female, setFemale] = useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [field, setField] = useState("nombre");
@@ -29,6 +32,8 @@ export const Show = () => {
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
   // Obtener los elementos a mostrar en la página actual
+
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const arraySorted = students.sort(function (b, a) {
@@ -36,6 +41,9 @@ export const Show = () => {
   });
 
   const currentItems = arraySorted.slice(indexOfFirstItem, indexOfLastItem);
+
+
+
 
   // Función para cambiar a la página siguiente
   const nextPage = () => {
@@ -112,7 +120,7 @@ export const Show = () => {
     }
     setCurrentPage(1)
     setItemsPerPage(6)
-  }, [search])
+  }, [search, itemsPerPage])
 
 
 
@@ -155,6 +163,28 @@ export const Show = () => {
     //eslint-disable-next-line
   }, [])
 
+  useEffect(() => {
+    groupedByGender()
+    //eslint-disable-next-line
+  }, [students])
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    doc.autoTable({ html: '#mi-tabla' });
+    doc.save('tabla.pdf');
+  }
+
+  const groupedByGender = () => {
+    students?.reduce((genders, student) => {
+      if (!genders[student?.gender]) {
+        genders[student.gender] = [];
+      }
+      genders[student?.gender].push(student);
+      setMale(genders["M"]);
+      setFemale(genders["F"]);
+      console.log(genders)
+      return genders;
+    }, {});
+  }
 
   const calcularMonedas = students.reduce((suma, student) => suma + parseInt(student.monedas), 0);
   return (
@@ -211,11 +241,18 @@ export const Show = () => {
 
             </div>
             <div className=' mb-2 col-sm-12 col-lg-12 col-md-12 d-flex aditional-info'>
-              <span className=" me-2 aditional-info-item">Total de niños: {students.length}</span>
+              <span className=" me-2 aditional-info-item">Total de niños: {students?.length} | F: {female?.length}, M: {male?.length} </span>
               <span className=" aditional-info-item">Monedas repartidas: {calcularMonedas}</span>
             </div>
             <div className="overflow-y-auto">
-              <table className='table table-striped'>
+
+              <div className="table-buttons">
+                <button id="pdf-button" className='btn-pdf' onClick={downloadPDF}>
+                  <i className='fa fa-file-pdf' />
+                </button>
+              </div>
+
+              <table className='table table-striped' id='mi-tabla'>
                 <thead className="table-dark">
                   <tr>
                     <th></th>
@@ -249,10 +286,10 @@ export const Show = () => {
                         </td>
                         <td>
                           <Link to={`/edit/${student.id}`} className=''>
-                            <i className="fa-solid fa-pencil" style={{ color: "#6b93cc" }} />
+                            <i className="fa-solid fa-pencil" style={{ color: "#ccab6a" }} />
                           </Link>
                           <button onClick={() => { confirmDelete(student.id) }} style={{ border: "none", background: 'transparent' }}>
-                            <i className="fa-solid fa-trash" style={{ color: "#f27474" }} />
+                            <i className="fa-solid fa-trash" style={{ color: "#ccab6a" }} />
                           </button>
                         </td>
                       </tr>
@@ -279,10 +316,10 @@ export const Show = () => {
                 <div>
                   <div className='d-flex justify-content-center align-items-center'>
                     <select className='pagination' onChange={(e) => setItemsPerPage(e.target.value)}>
-                      <option value="5">5</option>
+                      <option value="6">6</option>
                       <option value="15">15</option>
                       <option value="25">25</option>
-                      <option value={students.length}>Todos</option>
+                      <option value={students?.length}>Todos</option>
                     </select>
                     <h6 className='ms-3 text-secondary'>Pág: {currentPage} de {Math.ceil(students.length / itemsPerPage)} </h6>
                   </div>
