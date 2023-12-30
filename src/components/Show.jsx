@@ -20,13 +20,15 @@ export const Show = () => {
   const sidebarOpen = useSidebarContext();
   const handlerSidebarVisible = useSidebarToggleContext();
 
+  const [studentsOriginal, setStudentsOriginal] = useState([]);
   const [students, setStudents] = useState([]);
   const [male, setMale] = useState([]);
   const [female, setFemale] = useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [field, setField] = useState("nombre");
-
+  const [fieldSort, setFieldSort] = useState("nombre");
+  const [sortOrder, setSortOrder] = useState("desc");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -36,11 +38,32 @@ export const Show = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const arraySorted = students.sort(function (b, a) {
-    return (b.nombre.toLowerCase().localeCompare(a.nombre.toLowerCase()))
-  });
 
-  const currentItems = arraySorted.slice(indexOfFirstItem, indexOfLastItem);
+  const sortTable = () => {
+    if (fieldSort === "nombre" || fieldSort === "apellidos") {
+      let array = students.sort(function (b, a) {
+        if (sortOrder === "asc") {
+          return (b[fieldSort].toLowerCase().localeCompare(a[fieldSort].toLowerCase()))
+        } else {
+          return (a[fieldSort].toLowerCase().localeCompare(b[fieldSort].toLowerCase()))
+        }
+
+      });
+      return array;
+    } else {
+      let array = students.sort(function (b, a) {
+        if (sortOrder === "asc") {
+          return (b[fieldSort] - a[fieldSort])
+        } else {
+          return (a[fieldSort] - b[fieldSort])
+        }
+      });
+      return array;
+    }
+  }
+
+
+
 
 
 
@@ -63,9 +86,11 @@ export const Show = () => {
 
 
   const serchingTerm = (search) => {
+    console.log(search)
     if (field === "nombre") {
-      return function (x) {
-        return x.nombre.includes(search) || !search
+      return function () {
+        let res = studentsOriginal.filter(student => student.nombre.includes(search) || !search)
+        return res
       }
     }
     else if (field === "apellidos") {
@@ -103,13 +128,20 @@ export const Show = () => {
 
 
   useEffect(() => {
-    setData(currentItems)
-  }, [currentPage, students])
+    let res = sortTable()
+    if (res.length > 0) {
+      const currentItems = res.slice(indexOfFirstItem, indexOfLastItem);
+      if (currentItems.length > 0) {
+        setData(currentItems)
+      }
+    }
+  }, [currentPage, students, fieldSort, sortOrder])
 
 
   useEffect(() => {
     if (search !== "") {
-      const currentItems = students.filter(serchingTerm(search))
+      /* const currentItems = students.filter(serchingTerm(search)) */
+      const currentItems = serchingTerm(search)
       setStudents(currentItems)
       if (currentItems.length > 0) {
         setData(currentItems)
@@ -118,8 +150,8 @@ export const Show = () => {
     else {
       getStudents()
     }
-    setCurrentPage(1)
-    setItemsPerPage(6)
+    /* setCurrentPage(1)
+    setItemsPerPage(6) */
   }, [search, itemsPerPage])
 
 
@@ -127,6 +159,9 @@ export const Show = () => {
   const getStudents = async () => {
     const data = await getDocs(studentsCollection)
     setStudents(
+      data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    );
+    setStudentsOriginal(
       data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     );
   }
@@ -168,9 +203,14 @@ export const Show = () => {
     //eslint-disable-next-line
   }, [students])
   const downloadPDF = () => {
-    const doc = new jsPDF();
-    doc.autoTable({ html: '#mi-tabla' });
-    doc.save('tabla.pdf');
+    setItemsPerPage(students.length)
+
+    setTimeout(() => {
+      const doc = new jsPDF();
+      doc.autoTable({ html: '#mi-tabla' });
+      doc.save('tabla.pdf');
+      setItemsPerPage(6)
+    }, 3000)
   }
 
   const groupedByGender = () => {
@@ -181,9 +221,17 @@ export const Show = () => {
       genders[student?.gender].push(student);
       setMale(genders["M"]);
       setFemale(genders["F"]);
-      console.log(genders)
       return genders;
     }, {});
+  }
+
+  const sortColumn = (value) => {
+    if (sortOrder === "asc") {
+      setSortOrder("desc");
+    } else {
+      setSortOrder("asc");
+    }
+    setFieldSort(value)
   }
 
   const calcularMonedas = students.reduce((suma, student) => suma + parseInt(student.monedas), 0);
@@ -256,10 +304,26 @@ export const Show = () => {
                 <thead className="table-dark">
                   <tr>
                     <th></th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th className='show-item'>Edad</th>
-                    <th>Monedas</th>
+                    <th>Nombre
+                      <i className={sortOrder === "asc" ? `fa-solid fa-arrow-down-wide-short ms-3` : `fa-solid fa-arrow-up-short-wide ms-3`} onClick={() => {
+                        sortColumn("nombre")
+                      }} />
+                    </th>
+                    <th>Apellidos
+                      <i className={sortOrder === "asc" ? `fa-solid fa-arrow-down-wide-short ms-3` : `fa-solid fa-arrow-up-short-wide ms-3`} onClick={() => {
+                        sortColumn("apellidos")
+                      }} />
+                    </th>
+                    <th className='show-item'>Edad
+                      <i className={sortOrder === "asc" ? `fa-solid fa-arrow-down-wide-short ms-3` : `fa-solid fa-arrow-up-short-wide ms-3`} onClick={() => {
+                        sortColumn("edad")
+                      }} />
+                    </th>
+                    <th>Monedas
+                      <i className={sortOrder === "asc" ? `fa-solid fa-arrow-down-wide-short ms-3` : `fa-solid fa-arrow-up-short-wide ms-3`} onClick={() => {
+                        sortColumn("monedas")
+                      }} />
+                    </th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
