@@ -11,7 +11,7 @@ import { useSidebarContext, useSidebarToggleContext } from '../providers/Sidebar
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-
+import { Toaster, toast } from 'react-hot-toast';
 
 const Myswal = withReactContent(Swal)
 
@@ -28,7 +28,8 @@ export const Show = () => {
   const [search, setSearch] = useState("");
   const [field, setField] = useState("nombre");
   const [fieldSort, setFieldSort] = useState("nombre");
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [download, setDownload] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -91,6 +92,7 @@ export const Show = () => {
         const student = doc(db, "estudiantes", id)
         const data = { monedas: monedas.toString() }
         await updateDoc(student, data)
+        toast.success("Monedas actualizadas")
         navigate("/")
       }
     }
@@ -112,7 +114,6 @@ export const Show = () => {
 
   useEffect(() => {
     if (search !== "") {
-      /* const currentItems = students.filter(serchingTerm(search)) */
       const currentItems = serchingTerm(search)
       setStudents(currentItems)
       if (currentItems.length > 0) {
@@ -173,7 +174,10 @@ export const Show = () => {
     groupedByGender()
     //eslint-disable-next-line
   }, [students])
+
+
   const downloadPDF = () => {
+    setDownload(true)
     setItemsPerPage(students.length)
 
     setTimeout(() => {
@@ -181,6 +185,8 @@ export const Show = () => {
       doc.autoTable({ html: '#mi-tabla' });
       doc.save('tabla.pdf');
       setItemsPerPage(6)
+      setDownload(false)
+      toast.success('Descarga exitosa!')
     }, 3000)
   }
 
@@ -213,6 +219,10 @@ export const Show = () => {
         <div className='d-flex'>
           <Sidebar sidebarOpen={sidebarOpen} />
           <div className={`margin-top-movile ${sidebarOpen ? "width" : "width-full"}`} style={{ padding: "0 3%" }}>
+            <Toaster
+              position="top-center"
+              reverseOrder={false}
+            />
             <div className="row mb-3 d-flex">
               <div className='col-lg-8 col-sm-6 col-md-2 align-items-center'>
                 <Link to="/create" className='text-decoration-none'>
@@ -267,7 +277,8 @@ export const Show = () => {
 
               <div className="table-buttons">
                 <button id="pdf-button" className='btn-pdf' onClick={downloadPDF}>
-                  <i className='fa fa-file-pdf' />
+                  <i className='fa fa-file-pdf me-2' />
+                  {download ? "Descargando..." : "Descargar"}
                 </button>
               </div>
 

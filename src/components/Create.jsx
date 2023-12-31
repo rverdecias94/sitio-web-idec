@@ -7,7 +7,7 @@ import Header from './Layouts/Header';
 import Sidebar from './Layouts/Sidebar';
 import { useSidebarContext, useSidebarToggleContext } from '../providers/SidebarProvider';
 import "./css/create.css"
-
+import { Toaster, toast } from 'react-hot-toast';
 
 const Create = () => {
 
@@ -27,7 +27,8 @@ const Create = () => {
   const addStudent = async (e) => {
     e.preventDefault()
     await addDoc(studentsCollection, { nombre: nombre, apellidos: apellidos, gender: gender, edad: edad, monedas: monedas })
-    navigate("/")
+    toast.success("Registro satisfactorio")
+    setTimeout(() => navigate("/"), 2000)
   }
 
 
@@ -40,6 +41,10 @@ const Create = () => {
           <div className={`margin-top-movile ${sidebarOpen ? "width" : "width-full"}`} style={{ padding: "0 3%" }}>
             <div className="row">
               <div className="col">
+                <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                />
                 <h3 style={{ fontFamily: "cursive" }}>Registrar estudiante</h3>
                 <form onSubmit={addStudent} className='form-control-sm'>
                   <div className="mb-3">

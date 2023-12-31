@@ -7,6 +7,7 @@ import Header from './Layouts/Header';
 import Sidebar from './Layouts/Sidebar';
 import { useSidebarContext, useSidebarToggleContext } from '../providers/SidebarProvider';
 import "./css/edit.css"
+import { Toaster, toast } from 'react-hot-toast';
 
 const Edit = () => {
 
@@ -34,7 +35,8 @@ const Edit = () => {
     const student = doc(db, "estudiantes", id)
     const data = { nombre: nombre, apellidos: apellidos, gender: gender, edad: edad, monedas: monedas }
     await updateDoc(student, data)
-    navigate("/")
+    toast.success("Información actualizada existosamente")
+    setTimeout(() => navigate("/"), 2000)
   }
 
   const getStudentById = async (id) => {
@@ -46,7 +48,7 @@ const Edit = () => {
       setEdad(student.data().edad)
       setMonedas(student.data().monedas)
     } else {
-      console.log("Student not exist")
+      toast.error("No hay data para mostrar");
     }
   }
 
@@ -59,6 +61,10 @@ const Edit = () => {
           <Sidebar sidebarOpen={sidebarOpen} />
           <div className={`margin-top-movile ${sidebarOpen ? "width" : "width-full"}`} style={{ padding: "0 3%" }}>
             <div className="row">
+              <Toaster
+                position="top-center"
+                reverseOrder={false}
+              />
               <h3 style={{ fontFamily: "cursive" }}>Editar estudiante</h3>
               <form onSubmit={updateInfo}>
                 <div className="mb-3">
