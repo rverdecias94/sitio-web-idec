@@ -277,8 +277,10 @@ export const Show = () => {
 
               <div className="table-buttons">
                 <button id="pdf-button" className='btn-pdf' onClick={downloadPDF}>
-                  <i className='fa fa-file-pdf me-2' />
-                  {download ? "Descargando..." : "Descargar"}
+                  <i className='fa fa-file-pdf' />
+                  <span className='downloadText'>
+                    {download ? " Descargando..." : " Descargar"}
+                  </span>
                 </button>
               </div>
 

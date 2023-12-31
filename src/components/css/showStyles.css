@@ -121,6 +121,17 @@
     z-index: 100;
   }
 
+  .btn-pdf {
+    border-radius: 8px;
+    position: fixed;
+    right: 13px;
+    bottom: 50px;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .margin-top-movile {
     margin-top: 15vh;
   }
@@ -129,6 +140,7 @@
     width: 100vw;
   }
 
+  .downloadText,
   .create-text,
   .text-btn-pag {
     display: none
